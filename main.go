@@ -5,6 +5,7 @@ import (
 	"path"
 	"path/filepath"
 
+	"github.com/codypotter/lofi-blog/db"
 	"github.com/gin-gonic/gin"
 )
 
@@ -29,6 +30,8 @@ func main() {
 			})
 		})
 	}
+
+	db.Connect()
 
 	if err := r.Run(); err != nil {
 		log.Fatal("Server failed to start")
