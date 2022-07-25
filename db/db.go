@@ -26,7 +26,8 @@ type Post struct {
 }
 
 func Connect() {
-	conn, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	var err error
+	conn, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 	if err != nil {
 		log.Panic("failed to connect database")
 	}
