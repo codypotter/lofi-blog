@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class FeaturedComponent implements OnInit {
 
   @Input()
-  post: String
+  post = ""
   
   constructor() { }
 
