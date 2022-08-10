@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PostPageComponent } from './post-page/post-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { PostListComponent } from './post-list/post-list.component';
+import { PostListItemComponent } from './post-list/post-list-item/post-list-item.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PostListComponent } from './post-list/post-list.component';
     FeaturedComponent,
     PostPageComponent,
     HomePageComponent,
-    PostListComponent
+    PostListComponent,
+    PostListItemComponent
   ],
   imports: [
     BrowserModule,
