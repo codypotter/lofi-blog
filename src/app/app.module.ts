@@ -7,6 +7,10 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { NavigationItemComponent } from './navigation/navigation-item/navigation-item.component';
 import { SearchComponent } from './search/search.component';
 import { FeaturedComponent } from './featured/featured.component';
+import { HttpClientModule } from '@angular/common/http';
+import { PostPageComponent } from './post-page/post-page.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { PostListComponent } from './post-list/post-list.component';
 
 @NgModule({
   declarations: [
@@ -14,11 +18,15 @@ import { FeaturedComponent } from './featured/featured.component';
     NavigationComponent,
     NavigationItemComponent,
     SearchComponent,
-    FeaturedComponent
+    FeaturedComponent,
+    PostPageComponent,
+    HomePageComponent,
+    PostListComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

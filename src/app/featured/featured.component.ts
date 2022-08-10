@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Post } from 'src/models/post';
+import { PostsService } from '../posts.service';
 
 @Component({
   selector: 'app-featured',
@@ -7,13 +10,14 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class FeaturedComponent implements OnInit {
 
-  @Input()
-  post = ""
+  post?: Observable<Post>;
   
-  constructor() { }
+  constructor(private postsService: PostsService) { 
+    this.post = this.postsService.getFeaturedPost();
+  }
 
   ngOnInit(): void {
-    console.log(this.post);
+    this.postsService.getFeaturedPost()
   }
 
 }
