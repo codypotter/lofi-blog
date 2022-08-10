@@ -5,6 +5,7 @@ import (
 	"path"
 	"path/filepath"
 
+	"github.com/codypotter/lofi-blog/controller"
 	"github.com/codypotter/lofi-blog/db"
 	"github.com/gin-gonic/gin"
 )
@@ -24,11 +25,11 @@ func main() {
 
 	api := r.Group("/api")
 	{
-		api.GET("/ping", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"message": "pong",
-			})
-		})
+		posts := api.Group("/posts")
+		{
+			posts.GET("/", controller.GetAllPosts)
+			posts.GET("/featured", controller.GetFeaturedPost)
+		}
 	}
 
 	db.Connect()

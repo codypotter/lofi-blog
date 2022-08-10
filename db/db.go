@@ -1,7 +1,7 @@
 package db
 
 import (
-	"fmt"
+	"errors"
 	"log"
 	"os"
 	"strings"
@@ -15,38 +15,33 @@ import (
 
 var conn *gorm.DB
 
+var (
+	ErrConnection = errors.New("db connection error")
+	ErrNotFound   = errors.New("db error not found")
+)
+
 type Post struct {
-	ID        uint
-	Title     string
-	Markup    string
-	Category  string
-	Upvotes   uint
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	ID        uint      `json:"id"`
+	Title     string    `json:"title"`
+	Markup    string    `json:"markup"`
+	Category  string    `json:"category"`
+	Upvotes   uint      `json:"upvotes"`
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
 }
 
 func Connect() {
 	var err error
-	conn, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	conn, err = gorm.Open(sqlite.Open("lofi.db"), &gorm.Config{})
 	if err != nil {
 		log.Panic("failed to connect database")
 	}
 
 	if conn.AutoMigrate(&Post{}) != nil {
-		log.Panic("Failed to automigrate database")
+		log.Panic("failed to automigrate database")
 	}
 
 	readPosts()
-}
-
-func AddPost(title string, markup string, category string, date time.Time) {
-	log.Println("adding post...")
-	conn.Create(&Post{
-		Title:    title,
-		Markup:   markup,
-		Category: category,
-		Upvotes:  0,
-	})
 }
 
 func readPosts() {
@@ -54,7 +49,7 @@ func readPosts() {
 
 	postFiles, err := outputDirRead.ReadDir(0)
 	if err != nil {
-		log.Fatal("Failed to read posts directory")
+		log.Fatal("failed to read posts directory")
 	}
 
 	// Iterate over files in posts directory, creating a post for each
@@ -68,7 +63,7 @@ func readPosts() {
 		// read markdown contents
 		md, err := os.ReadFile("./posts/" + postFileName)
 		if err != nil {
-			log.Fatalf("Error reading file %s\n", postFileName)
+			log.Fatalf("error reading file %s\n", postFileName)
 		}
 
 		// parse markdown file into html
@@ -77,7 +72,6 @@ func readPosts() {
 
 		// parse filename into post metadata
 		title, category, date := parseFileName(postFileName)
-		fmt.Printf("Title: %s, html: %s, category: %s, date: %v", title, string(html), category, date)
 
 		AddPost(title, string(html), category, date)
 	}
@@ -88,7 +82,7 @@ func parseFileName(filename string) (string, string, time.Time) {
 
 	date, err := time.Parse("2006-01-02", parts[2])
 	if err != nil {
-		log.Fatalf("Failed to parse date for file %s. Check the format.\n", filename)
+		log.Fatalf("failed to parse date for file %s. check the format.\n", filename)
 	}
 
 	return parts[0], parts[1], date
