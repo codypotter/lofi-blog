@@ -1,1 +1,10 @@
-<p>post-list-item works: {{post!.title}}</p>
+<a [routerLink]="['posts', post?.id]">
+    <div class="d-flex justify-content-between">
+        <h3>{{post?.title}}</h3>
+        <h3>🠕{{post?.upvotes}}</h3>
+    </div>
+    <div class="chin d-flex mx-2">
+        <span>{{post?.createdAt | date:'mediumDate'}}</span>
+        <span><a [routerLink]="['categories', post?.category]" class="category">{{post?.category}}</a></span>
+    </div>
+</a>

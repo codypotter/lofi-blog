@@ -1,0 +1,14 @@
+a {
+    text-decoration: none;
+    color: inherit;
+    margin: 1.5em;
+}
+.chin {
+    gap: 1em;
+    color: gray;
+
+    a {
+        color: revert;
+        margin: revert;
+    }
+}

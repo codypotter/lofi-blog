@@ -1,1 +1,4 @@
-<app-post-list-item *ngFor="let post of (postsResponse | async)?.posts" [post]="post"></app-post-list-item>
+<img id="more-stuff-icon" src="/assets/more-stuff-wordart.png">
+<section class="bg-light">
+    <app-post-list-item *ngFor="let post of (postsResponse | async)?.posts" [post]="post"></app-post-list-item>
+</section>

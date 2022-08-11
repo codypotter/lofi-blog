@@ -1,6 +1,6 @@
 <img id="featured-icon" src="/assets/featured-wordart.png">
 <h1>{{(post | async)?.title}}</h1>
 <div class="post" [innerHTML]="(post | async)?.markup"></div>
-<div class="footer">
-    <a [routerLink]="['posts', (post | async)?.id]">...Keep Reading</a>
+<div class="footer d-flex justify-content-center mt-3 mb-5">
+    <a [routerLink]="['posts', (post | async)?.id]">...keep reading</a>
 </div>
