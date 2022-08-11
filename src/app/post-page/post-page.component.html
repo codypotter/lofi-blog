@@ -1,1 +1,8 @@
-<p>post-page works!</p>
+<div *ngIf="post | async as post; else loading">
+    <h1>{{post.title}}</h1>
+    <div class="post" [innerHTML]="post.markup"></div>
+</div>
+
+<ng-template #loading>
+    Loading post...
+</ng-template>

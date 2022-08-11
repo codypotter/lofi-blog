@@ -28,8 +28,9 @@ func main() {
 		posts := api.Group("/posts")
 		{
 			posts.GET("/", controller.GetAllPosts)
-			posts.GET("/featured", controller.GetFeaturedPost)
 			posts.DELETE("/", controller.DropAndReloadPosts)
+			posts.GET("/featured", controller.GetFeaturedPost)
+			posts.GET("/:id", controller.GetPostById)
 		}
 	}
 

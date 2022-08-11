@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Post } from 'src/models/post';
+import { PostsService } from '../posts.service';
 
 @Component({
   selector: 'app-post-page',
@@ -7,9 +11,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostPageComponent implements OnInit {
 
-  constructor() { }
+  post?: Observable<Post>;
+
+  constructor(private postsService: PostsService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.post = this.postsService.getPostById(this.route.snapshot.params.id);
   }
 
 }

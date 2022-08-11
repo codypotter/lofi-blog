@@ -47,6 +47,26 @@ func GetFeaturedPost(c *gin.Context) {
 	c.JSON(200, featuredPost)
 }
 
+func GetPostById(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		log.Printf("received non numeric id in get post by id")
+		c.AbortWithStatus(400)
+		return
+	}
+	post, err := db.GetPostById(c, id)
+	if err != nil {
+		log.Printf("error getting post by id: %v\n", err)
+		if errors.Is(err, db.ErrNotFound) {
+			c.AbortWithError(404, err)
+			return
+		}
+		c.AbortWithError(500, err)
+		return
+	}
+	c.JSON(200, post)
+}
+
 func DropAndReloadPosts(c *gin.Context) {
 	err := db.DropPosts(c)
 	if err != nil {

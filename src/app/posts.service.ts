@@ -18,4 +18,8 @@ export class PostsService {
   getFeaturedPost(): Observable<Post> {
     return this.http.get<Post>('/api/posts/featured');
   }
+
+  getPostById(id: number): Observable<Post> {
+    return this.http.get<Post>(`/api/posts/${id}`)
+  }
 }

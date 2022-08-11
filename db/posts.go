@@ -53,6 +53,18 @@ func GetMostRecentPost(ctx context.Context) (*Post, error) {
 	return &featuredPost, nil
 }
 
+func GetPostById(ctx context.Context, id int) (*Post, error) {
+	var post Post
+	result := conn.WithContext(ctx).First(&post, id)
+	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return nil, fmt.Errorf("get post by id error: %w", ErrNotFound)
+		}
+		return nil, fmt.Errorf("get post by id error: %w", result.Error)
+	}
+	return &post, nil
+}
+
 func DropPosts(ctx context.Context) error {
 	return conn.WithContext(ctx).Migrator().DropTable(&Post{})
 }
