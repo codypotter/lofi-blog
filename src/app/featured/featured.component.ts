@@ -13,11 +13,10 @@ export class FeaturedComponent implements OnInit {
   post?: Observable<Post>;
   
   constructor(private postsService: PostsService) { 
-    this.post = this.postsService.getFeaturedPost();
   }
 
   ngOnInit(): void {
-    this.postsService.getFeaturedPost()
+    this.post = this.postsService.getFeaturedPost();
   }
 
 }

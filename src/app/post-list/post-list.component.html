@@ -1,1 +1,1 @@
-<app-post-list-item *ngFor="let post of (postsResponse | async).posts"></app-post-list-item>
+<app-post-list-item *ngFor="let post of (postsResponse | async)?.posts" [post]="post"></app-post-list-item>

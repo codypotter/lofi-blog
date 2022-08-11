@@ -33,6 +33,10 @@
             "scripts": []
           },
           "configurations": {
+            "dev": {
+              "optimization": false,
+              "sourceMap": true
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -70,6 +74,9 @@
           "configurations": {
             "production": {
               "browserTarget": "lofi-blog:build:production"
+            },
+            "dev": {
+              "browserTarget": "lofi-blog:build:dev"
             }
           }
         },
