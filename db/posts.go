@@ -4,8 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"os"
+	"strings"
 	"time"
 
+	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/parser"
 	"gorm.io/gorm"
 )
 
@@ -47,4 +51,50 @@ func GetMostRecentPost(ctx context.Context) (*Post, error) {
 		return nil, fmt.Errorf("get featured post error: %w", result.Error)
 	}
 	return &featuredPost, nil
+}
+
+func DropPosts(ctx context.Context) error {
+	return conn.WithContext(ctx).Migrator().DropTable(&Post{})
+}
+
+func ReloadPosts(ctx context.Context) error {
+	conn.WithContext(ctx).Migrator().AutoMigrate(&Post{})
+	outputDirRead, _ := os.Open("./posts")
+
+	postFiles, err := outputDirRead.ReadDir(0)
+	if err != nil {
+		return err
+	}
+
+	for _, postFile := range postFiles {
+		// Get name of file.
+		postFileName := postFile.Name()
+
+		// read markdown contents
+		md, err := os.ReadFile("./posts/" + postFileName)
+		if err != nil {
+			return err
+		}
+
+		// parse markdown file into html
+		parser := parser.New()
+		html := markdown.ToHTML(md, parser, nil)
+
+		// parse filename into post metadata
+		parts := strings.Split(postFileName, "$")
+
+		date, err := time.Parse("2006-01-02", parts[2])
+		if err != nil {
+			return err
+		}
+
+		conn.WithContext(ctx).Create(&Post{
+			Title:     parts[0],
+			Markup:    string(html),
+			Category:  parts[1],
+			Upvotes:   0,
+			CreatedAt: date,
+		})
+	}
+	return nil
 }

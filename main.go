@@ -29,6 +29,7 @@ func main() {
 		{
 			posts.GET("/", controller.GetAllPosts)
 			posts.GET("/featured", controller.GetFeaturedPost)
+			posts.DELETE("/", controller.DropAndReloadPosts)
 		}
 	}
 

@@ -3,6 +3,7 @@ package controller
 import (
 	"errors"
 	"log"
+	"net/http"
 	"strconv"
 
 	"github.com/codypotter/lofi-blog/db"
@@ -44,4 +45,21 @@ func GetFeaturedPost(c *gin.Context) {
 		return
 	}
 	c.JSON(200, featuredPost)
+}
+
+func DropAndReloadPosts(c *gin.Context) {
+	err := db.DropPosts(c)
+	if err != nil {
+		log.Printf("error dropping posts: %v\n", err)
+		c.AbortWithError(500, err)
+		return
+	}
+
+	err = db.ReloadPosts(c)
+	if err != nil {
+		log.Printf("error reloading posts: %v\n", err)
+		c.AbortWithError(500, err)
+		return
+	}
+	c.Status(http.StatusNoContent)
 }
