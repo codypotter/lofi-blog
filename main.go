@@ -31,6 +31,7 @@ func main() {
 			posts.DELETE("/", controller.DropAndReloadPosts)
 			posts.GET("/featured", controller.GetFeaturedPost)
 			posts.GET("/:id", controller.GetPostById)
+			posts.PUT("/", controller.UpvotePost)
 		}
 	}
 

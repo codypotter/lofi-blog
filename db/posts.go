@@ -110,3 +110,19 @@ func ReloadPosts(ctx context.Context) error {
 	}
 	return nil
 }
+
+func UpvotePost(ctx context.Context, id int) (int, error) {
+	result := conn.WithContext(ctx).Exec("UPDATE posts SET upvotes = upvotes + 1 WHERE id = ?", id)
+	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return 0, fmt.Errorf("upvote post by id error: %w", ErrNotFound)
+		}
+		return 0, fmt.Errorf("upvote post by id error: %w", result.Error)
+	}
+	var post Post
+	result = conn.WithContext(ctx).First(&post, id)
+	if result.Error != nil {
+		return 0, fmt.Errorf("get post by id error: %w", result.Error)
+	}
+	return int(post.Upvotes), nil
+}

@@ -5,3 +5,7 @@ export interface GetAllPostsResponse {
     more: boolean;
     posts: Post[];
 }
+
+export interface UpvoteResponse {
+    upvotes: number;
+}

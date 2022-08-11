@@ -83,3 +83,32 @@ func DropAndReloadPosts(c *gin.Context) {
 	}
 	c.Status(http.StatusNoContent)
 }
+
+func UpvotePost(c *gin.Context) {
+	reqbody := struct {
+		Id string `json:"id"`
+	}{}
+	err := c.BindJSON(&reqbody)
+	if err != nil {
+		c.AbortWithError(400, err)
+		return
+	}
+	id, err := strconv.Atoi(reqbody.Id)
+	if err != nil {
+		log.Printf("failed to parse id from upvote request body")
+		c.AbortWithError(400, err)
+	}
+	upvotes, err := db.UpvotePost(c, id)
+	if err != nil {
+		log.Printf("error upvoting post by id: %v\n", err)
+		if errors.Is(err, db.ErrNotFound) {
+			c.AbortWithError(404, err)
+			return
+		}
+		c.AbortWithError(500, err)
+		return
+	}
+	c.JSON(http.StatusAccepted, gin.H{
+		"upvotes": upvotes,
+	})
+}

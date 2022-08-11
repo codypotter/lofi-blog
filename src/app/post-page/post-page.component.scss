@@ -7,3 +7,15 @@
         margin-right: auto;
     }
 }
+
+.bottom-bar {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+
+    h5 {
+        text-align: right;
+        cursor: pointer;
+    }
+}

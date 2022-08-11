@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Post } from 'src/models/post';
-import { GetAllPostsResponse } from 'src/models/response';
+import { GetAllPostsResponse, UpvoteResponse } from 'src/models/response';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +21,9 @@ export class PostsService {
 
   getPostById(id: number): Observable<Post> {
     return this.http.get<Post>(`/api/posts/${id}`)
+  }
+
+  upvote(id: number) {
+    return this.http.put<UpvoteResponse>(`/api/posts`, { id })
   }
 }

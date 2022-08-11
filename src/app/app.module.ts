@@ -12,6 +12,7 @@ import { PostPageComponent } from './post-page/post-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { PostListItemComponent } from './post-list/post-list-item/post-list-item.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { PostListItemComponent } from './post-list/post-list-item/post-list-item
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
