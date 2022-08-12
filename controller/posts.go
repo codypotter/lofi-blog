@@ -16,10 +16,17 @@ func GetAllPosts(c *gin.Context) {
 		page = 1
 		log.Printf("get all posts failed to parse querystring for page: %v\n", err)
 	}
-	posts, err := db.GetAllPosts(c, page)
+	query := c.DefaultQuery("query", "")
+	category := c.DefaultQuery("category", "")
+
+	posts, err := db.GetAllPosts(c, page, query, category)
 	if err != nil {
 		log.Printf("error getting all posts: %v\n", err)
 		c.AbortWithError(500, err)
+		return
+	}
+	if len(posts) <= 0 {
+		c.AbortWithStatus(404)
 		return
 	}
 	c.JSON(200, struct {

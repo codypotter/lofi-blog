@@ -1,0 +1,17 @@
+<ng-container *ngIf="searchResponse | async as searchResponse; else loadingOrError">
+    <app-post-list-item *ngFor="let post of searchResponse.posts" [post]="post"></app-post-list-item>
+</ng-container>
+
+<ng-template #loadingOrError>
+    <ng-container *ngIf="requestErr; else loading">
+        <div class="col-12 text-center">
+          <p>no matching results found</p>
+          <p>perhaps the archives are incomplete?</p>
+        </div>
+      </ng-container>
+      <ng-template #loading>
+        <div class="col-12 text-center">
+          loading...
+        </div>
+      </ng-template>
+</ng-template>

@@ -27,10 +27,23 @@ func AddPost(title string, markup string, category string, date time.Time) {
 }
 
 // Get all posts from db with pagination
-func GetAllPosts(ctx context.Context, page int) ([]Post, error) {
+func GetAllPosts(ctx context.Context, page int, query, category string) ([]Post, error) {
 	var posts []Post
 	offset := (page - 1) * PAGE_SIZE
-	result := conn.WithContext(ctx).Order("created_at desc").Offset(offset).Limit(PAGE_SIZE).Find(&posts)
+	dbQuery := conn.WithContext(ctx).Order("created_at desc").Offset(offset).Limit(PAGE_SIZE)
+
+	if query != "" {
+		queryMatcher := fmt.Sprintf("%%%s%%", query)
+		markupMatcher := fmt.Sprintf("%% %s %%", query)
+		dbQuery = dbQuery.Where("title LIKE ? OR category LIKE ? OR markup LIKE ?", queryMatcher, queryMatcher, markupMatcher)
+	}
+
+	if category != "" {
+		categoryMatcher := fmt.Sprintf("%%%s%%", category)
+		dbQuery = dbQuery.Where("category LIKE ?", categoryMatcher)
+	}
+
+	result := dbQuery.Find(&posts)
 	if result.Error != nil {
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			return []Post{}, nil

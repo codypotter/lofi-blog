@@ -18,7 +18,7 @@ export class PostPageComponent implements OnInit {
   constructor(private postsService: PostsService, private route: ActivatedRoute, private clipboard: Clipboard) { }
 
   ngOnInit(): void {
-    this.post = this.postsService.getPostById(this.route.snapshot.params.id);
+    this.post = this.postsService.getById(this.route.snapshot.params.id);
     this.href = window.location.href;
   }
 

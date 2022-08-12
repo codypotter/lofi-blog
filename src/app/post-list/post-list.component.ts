@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GetAllPostsResponse } from 'src/models/response';
+import { GetPaginatedPostsResponse } from 'src/models/response';
 import { PostsService } from '../posts.service';
 
 @Component({
@@ -10,13 +10,13 @@ import { PostsService } from '../posts.service';
 })
 export class PostListComponent implements OnInit {
 
-  postsResponse?: Observable<GetAllPostsResponse>;
+  postsResponse?: Observable<GetPaginatedPostsResponse>;
 
   constructor(private postsService: PostsService) {
-    this.postsResponse = this.postsService.getAllPosts(1);
   }
 
   ngOnInit(): void {
+    this.postsResponse = this.postsService.getAll(1);
   }
 
 }

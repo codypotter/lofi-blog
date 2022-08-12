@@ -16,7 +16,7 @@ export class FeaturedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.post = this.postsService.getFeaturedPost();
+    this.post = this.postsService.getFeatured();
   }
 
 }

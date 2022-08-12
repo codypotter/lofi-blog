@@ -13,6 +13,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { PostListItemComponent } from './post-list/post-list-item/post-list-item.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { SearchPageComponent } from './search-page/search-page.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     PostPageComponent,
     HomePageComponent,
     PostListComponent,
-    PostListItemComponent
+    PostListItemComponent,
+    SearchPageComponent
   ],
   imports: [
     BrowserModule,

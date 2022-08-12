@@ -1,6 +1,6 @@
 import { Post } from "./post";
 
-export interface GetAllPostsResponse {
+export interface GetPaginatedPostsResponse {
     page: number;
     more: boolean;
     posts: Post[];
