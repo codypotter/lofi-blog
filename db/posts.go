@@ -70,7 +70,6 @@ func DropPosts(ctx context.Context) error {
 }
 
 func ReloadPosts(ctx context.Context) error {
-	conn.WithContext(ctx).Migrator().AutoMigrate(&Post{})
 	outputDirRead, _ := os.Open("./posts")
 
 	postFiles, err := outputDirRead.ReadDir(0)

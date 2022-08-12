@@ -22,7 +22,7 @@ var (
 
 type Post struct {
 	ID        uint      `json:"id"`
-	Title     string    `json:"title"`
+	Title     string    `json:"title" gorm:"unique"`
 	Markup    string    `json:"markup"`
 	Category  string    `json:"category"`
 	Upvotes   uint      `json:"upvotes"`
@@ -36,9 +36,9 @@ func Connect() {
 	if err != nil {
 		log.Panic("failed to connect database")
 	}
-
-	if conn.AutoMigrate(&Post{}) != nil {
-		log.Panic("failed to automigrate database")
+	err = conn.AutoMigrate(&Post{})
+	if err != nil {
+		log.Panicf("failed to automigrate database: %v", err)
 	}
 
 	readPosts()

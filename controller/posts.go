@@ -67,15 +67,8 @@ func GetPostById(c *gin.Context) {
 	c.JSON(200, post)
 }
 
-func DropAndReloadPosts(c *gin.Context) {
-	err := db.DropPosts(c)
-	if err != nil {
-		log.Printf("error dropping posts: %v\n", err)
-		c.AbortWithError(500, err)
-		return
-	}
-
-	err = db.ReloadPosts(c)
+func RefreshPosts(c *gin.Context) {
+	err := db.ReloadPosts(c)
 	if err != nil {
 		log.Printf("error reloading posts: %v\n", err)
 		c.AbortWithError(500, err)
