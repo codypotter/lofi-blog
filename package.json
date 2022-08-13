@@ -8,7 +8,11 @@
     "test": "ng test",
     "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "docker:login": "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 812100404712.dkr.ecr.us-east-1.amazonaws.com",
+    "docker:build": "ng build && docker build --rm -t lofi-blog .",
+    "docker:tag": "docker tag lofi-blog:latest 812100404712.dkr.ecr.us-east-1.amazonaws.com/lofi-blog:latest",
+    "docker:push": "docker push 812100404712.dkr.ecr.us-east-1.amazonaws.com/lofi-blog:latest"
   },
   "private": true,
   "dependencies": {
