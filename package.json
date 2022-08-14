@@ -12,7 +12,8 @@
     "docker:login": "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 812100404712.dkr.ecr.us-east-1.amazonaws.com",
     "docker:build": "ng build && docker build --rm -t lofi-blog .",
     "docker:tag": "docker tag lofi-blog:latest 812100404712.dkr.ecr.us-east-1.amazonaws.com/lofi-blog:latest",
-    "docker:push": "docker push 812100404712.dkr.ecr.us-east-1.amazonaws.com/lofi-blog:latest"
+    "docker:push": "docker push 812100404712.dkr.ecr.us-east-1.amazonaws.com/lofi-blog:latest",
+    "deploy": "eb deploy"
   },
   "private": true,
   "dependencies": {

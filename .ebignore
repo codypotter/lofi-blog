@@ -1,0 +1,6 @@
+.angular
+.devcontainer
+.vscode
+
+e2e
+node_modules
