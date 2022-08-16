@@ -1,36 +1,27 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.231.6/containers/typescript-node
 {
-	"name": "Node.js & TypeScript",
-	"build": {
-		"dockerfile": "Dockerfile",
-		// Update 'VARIANT' to pick a Node version: 16, 14, 12.
-		// Append -bullseye or -buster to pin to an OS version.
-		// Use -bullseye variants on local on arm64/Apple Silicon.
-		"args": { 
-			"VARIANT": "16-bullseye"
+	"name": "LoFi Blog",
+	"dockerComposeFile": [
+		"./docker-compose.yml"
+	],
+	"workspaceFolder": "/app",
+	"service": "lofi-blog",
+	"forwardPorts": [4200],
+	"extensions": [
+		"dbaeumer.vscode-eslint",
+		"cweijan.vscode-mysql-client2",
+		"mutantdino.resourcemonitor",
+		"angular.ng-template",
+		"golang.go"
+	],
+	"settings": {
+		"editor.tabSize": 2,
+		"terminal.integrated.profiles.linux": {
+			"bash": {
+				"path": "/bin/bash",
+				"icon": "terminal-bash"
+			}
 		}
 	},
-
-	// Set *default* container specific settings.json values on container create.
-	"settings": {},
-
-
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"angular.ng-template",
-		"dbaeumer.vscode-eslint"
-	],
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
-
-	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "node",
-	"features": {
-		"golang": "latest"
-	}
+	"postAttachCommand": "mkdir -p ~/.ssh && cp -r ~/.ssh-user/* ~/.ssh && chown -R node ~/.ssh && npm cache clean --force && npm install",
+	"remoteUser": "node"
 }

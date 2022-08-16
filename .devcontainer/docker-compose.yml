@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  lofi-blog:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    volumes:
+      - ../:/app
+      - ~/.ssh:/home/node/.ssh-user
+      - ~/.aws:/home/node/.aws
+    env_file:
+      - dev.env
+  mysql_db:
+    hostname: mysql_db
+    image: mysql/mysql-server:latest
+    env_file:
+      - mysql.env

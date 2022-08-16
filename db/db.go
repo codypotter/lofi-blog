@@ -2,14 +2,16 @@ package db
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/parser"
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -31,8 +33,20 @@ type Post struct {
 }
 
 func Connect() {
-	var err error
-	conn, err = gorm.Open(sqlite.Open("lofi.db"), &gorm.Config{})
+	dbPort, err := strconv.Atoi(os.Getenv("RDS_PORT"))
+	if err != nil {
+		log.Panic("failed to read port env")
+	}
+	dsn := fmt.Sprintf("%s:%s@(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local",
+		os.Getenv("RDS_USERNAME"),
+		os.Getenv("RDS_PASSWORD"),
+		os.Getenv("RDS_HOSTNAME"),
+		dbPort,
+		os.Getenv("RDS_DB_NAME"),
+	)
+	conn, err = gorm.Open(mysql.New(mysql.Config{
+		DSN: dsn,
+	}))
 	if err != nil {
 		log.Panic("failed to connect database")
 	}
